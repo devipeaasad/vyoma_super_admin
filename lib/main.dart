@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'pages/admin_login_page.dart';
 import 'pages/admin_home_page.dart';
+import 'pages/banner_manager_page.dart';
 
 void main() {
   runApp(const AdminApp());
@@ -20,6 +21,8 @@ class AdminApp extends StatelessWidget {
       routes: {
         '/login': (context) => const AdminLoginPage(),
         '/adminHome': (context) => const AdminHomePage(),
+        '/bannerManager': (context) => const BannerManagerPage(),
+
       },
     );
   }
