@@ -43,6 +43,30 @@ class _ManageProductsPageState extends State<ManageProductsPage> {
       status: "approved",
       imagePath: "assets/banners/banner2.jpg",
     ),
+    ProductModel(
+      name: "Chicken",
+      vendorName: "Meat Hub",
+      price: "₹250/kg",
+      category: "Meat",
+      status: "approved",
+      imagePath: "assets/banners/banner2.jpg",
+    ),
+    ProductModel(
+      name: "Chicken",
+      vendorName: "Meat Hub",
+      price: "₹250/kg",
+      category: "Meat",
+      status: "approved",
+      imagePath: "assets/banners/banner2.jpg",
+    ),
+    ProductModel(
+      name: "Chicken",
+      vendorName: "Meat Hub",
+      price: "₹250/kg",
+      category: "Meat",
+      status: "approved",
+      imagePath: "assets/banners/banner2.jpg",
+    ),
   ];
 
   String selectedFilter = "all";

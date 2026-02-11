@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'manage_banners_page.dart';
 import 'manage_vendors_page.dart';
 import 'manage_products_page.dart';
+import 'manage_users_page.dart';
 
 class AdminHomePage extends StatelessWidget {
   const AdminHomePage({super.key});
@@ -77,7 +78,12 @@ class AdminHomePage extends StatelessWidget {
               icon: Icons.person,
               label: "Manage Users",
               onTap: () {
-                // Navigate to user page later
+                 Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => const ManageUsersPage(),
+  ),
+);// Navigate to user page later
               },
             ),
           ],
