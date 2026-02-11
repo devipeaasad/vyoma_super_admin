@@ -15,6 +15,11 @@ class AdminApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Vyoma Super Admin',
 
+      theme: ThemeData(
+        useMaterial3: true,
+        primarySwatch: Colors.blue,
+      ),
+
       initialRoute: '/login',
 
       routes: {
