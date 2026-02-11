@@ -6,24 +6,27 @@ class BannerModel {
   File image;
   String title;
 
-  BannerModel({required this.image, required this.title});
+  BannerModel({
+    required this.image,
+    required this.title,
+  });
 }
 
-class ManageBannersPage extends StatefulWidget {
-  const ManageBannersPage({super.key});
+class AddBannerPage extends StatefulWidget {
+  const AddBannerPage({super.key});
 
   @override
-  State<ManageBannersPage> createState() => _ManageBannersPageState();
+  State<AddBannerPage> createState() => _AddBannerPageState();
 }
 
-class _ManageBannersPageState extends State<ManageBannersPage> {
+class _AddBannerPageState extends State<AddBannerPage> {
   final List<BannerModel> banners = [];
   final ImagePicker picker = ImagePicker();
 
-  File? selectedImage;
   final TextEditingController titleController = TextEditingController();
+  File? selectedImage;
 
-  /// Pick Image
+  /// PICK IMAGE
   Future<void> pickBanner() async {
     final picked =
         await picker.pickImage(source: ImageSource.gallery);
@@ -35,11 +38,11 @@ class _ManageBannersPageState extends State<ManageBannersPage> {
     }
   }
 
-  /// Add Banner
+  /// ADD BANNER
   void addBanner() {
     if (selectedImage == null || titleController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Add image and title")),
+        const SnackBar(content: Text("Please add image and title")),
       );
       return;
     }
@@ -52,12 +55,13 @@ class _ManageBannersPageState extends State<ManageBannersPage> {
         ),
       );
 
+      // Clear input after adding
       selectedImage = null;
       titleController.clear();
     });
   }
 
-  /// Delete Banner
+  /// DELETE BANNER
   void deleteBanner(int index) {
     setState(() {
       banners.removeAt(index);
@@ -72,7 +76,6 @@ class _ManageBannersPageState extends State<ManageBannersPage> {
       appBar: AppBar(
         title: const Text("Manage Banners"),
         centerTitle: true,
-        elevation: 0,
       ),
 
       body: Padding(
@@ -80,33 +83,29 @@ class _ManageBannersPageState extends State<ManageBannersPage> {
         child: Column(
           children: [
 
-            /// Upload Box
+            /// IMAGE PICKER
             GestureDetector(
               onTap: pickBanner,
               child: Container(
-                height: 170,
+                height: 150,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(16),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.grey.shade300),
                 ),
                 child: selectedImage == null
                     ? Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
                           Icon(Icons.image,
-                              size: 45, color: Colors.grey),
+                              size: 40, color: Colors.grey),
                           SizedBox(height: 10),
-                          Text(
-                            "Tap to upload banner",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey),
-                          )
+                          Text("Tap to upload banner"),
                         ],
                       )
                     : ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(12),
                         child: Image.file(
                           selectedImage!,
                           fit: BoxFit.cover,
@@ -115,54 +114,40 @@ class _ManageBannersPageState extends State<ManageBannersPage> {
               ),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 15),
 
-            /// Title Field
+            /// TITLE FIELD
             TextField(
               controller: titleController,
               decoration: InputDecoration(
-                hintText: "Banner Title",
+                labelText: "Banner Title",
                 filled: true,
                 fillColor: Colors.white,
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 16),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(12),
                 ),
+              ),
+            ),
+
+            const SizedBox(height: 15),
+
+            /// ADD BUTTON
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: addBanner,
+                child: const Text("Add Banner"),
               ),
             ),
 
             const SizedBox(height: 20),
 
-            /// Add Button
-            SizedBox(
-              width: double.infinity,
-              height: 55,
-              child: ElevatedButton(
-                onPressed: addBanner,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 156, 114, 230),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                child: const Text(
-                  "Add Banner",
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 30),
-
-            /// Banner List
+            /// BANNER LIST
             Expanded(
               child: banners.isEmpty
                   ? const Center(
-                      child: Text(
-                        "No Banners Added",
-                        style: TextStyle(fontSize: 16),
-                      ),
+                      child: Text("No Banners Added"),
                     )
                   : ListView.builder(
                       itemCount: banners.length,
@@ -170,12 +155,8 @@ class _ManageBannersPageState extends State<ManageBannersPage> {
                         final banner = banners[index];
 
                         return Card(
-                          margin: const EdgeInsets.only(
-                              bottom: 12),
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(14),
-                          ),
+                          margin:
+                              const EdgeInsets.only(bottom: 12),
                           child: ListTile(
                             leading: ClipRRect(
                               borderRadius:
@@ -189,10 +170,9 @@ class _ManageBannersPageState extends State<ManageBannersPage> {
                             ),
                             title: Text(banner.title),
                             trailing: IconButton(
-                              icon: const Icon(
-                                Icons.delete,
-                                color: Colors.red,
-                              ),
+                              icon:
+                                  const Icon(Icons.delete,
+                                      color: Colors.red),
                               onPressed: () =>
                                   deleteBanner(index),
                             ),
